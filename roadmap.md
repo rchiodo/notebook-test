@@ -27,7 +27,7 @@ Currently there are still two three missing pieces:
 
 - MIME Types
   - [ ] LaTeX. Users may use them in both Markdown Cell or Outputs.
-  - [ ] `application/json`. An interactive JSON viewer
+  - [ ] `application/json`.
   - [ ] `image/*`. We render PNG and JEPG in core but svg and gifs should be rendered in webview/iframe. (GIF support is a must as we don't support videos).
   - [ ] `application/scripts`.
 - Metadata

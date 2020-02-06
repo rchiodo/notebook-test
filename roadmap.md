@@ -136,7 +136,7 @@ Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.ht
 
 Notebooks contain text (markdown) and source code, so users would expect [code editing features](https://code.visualstudio.com/docs/editor/codebasics) from the notebook editor. 
 
-- View/Model States
+- Workspace
   - [x] 1️⃣ Save
   - [ ] 1️⃣ SaveAs
   - [ ] 1️⃣ Auto Save

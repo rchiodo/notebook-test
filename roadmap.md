@@ -18,6 +18,8 @@ Annotations
 | ✔️ | supported |
 | 1️⃣ | p1 |
 | 2️⃣ | p2 |
+| :suspect: | comments from rchiodo |
+| :musical_note: | comments from jimgries |
 
 # Rendering
 
@@ -50,6 +52,7 @@ Fulls lists of cell types, output mime types and metadata we may want to support
   - :suspect: Will editor extensions work? 
   - :suspect: How is language server going to be hooked up?
   - :suspect: Can we provide more than one language server for a cell? (Jupyter auto complete)
+  
 - Markdown Cell
   - [x] Live Preview
     - [x] Editor/Preview splited vertically
@@ -354,6 +357,13 @@ We need to validate if this can work and investigate how debugging should work w
     - We support starting a server on open. Will we get a notification on opening an ipynb file? 
 
 # MISC
+
+- [ ] :musical_note: I don't really like the idea of having to keep our own implementation of notebook UI for our interactive experience use. I think it would be prudent to review the differences between what notebooks support and what the interactive window does to see if we can't come up with a framework that would support both. Some differences between the two:
+  - A cell contains code that is read-only and collapsible.
+  - The cell manipulation buttons are placed differently better account for SxS view with a python file.
+  - Cells can't be inserted, nor can they be reordered.
+  - There is an input box at the bottom of the window that acts as an embedded terminal window of sorts that is used for appending new cells. 
+  
 
 Bugs / Polish items
 

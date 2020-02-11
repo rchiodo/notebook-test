@@ -348,6 +348,9 @@ We need to validate if this can work and investigate how debugging should work w
  - :suspect: Kernel selection?
  - :suspect: Controlling the kernel like:
     - Run all cells? Interrupt kernel? Restart Kernel?
+ - :suspect: How will starting a kernel/server happen? 
+    - We support remote and local. Need some way to indicate which is connected
+    - We support starting a server on open. Will we get a notification on opening an ipynb file? 
 
 # MISC
 

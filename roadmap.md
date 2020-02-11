@@ -92,7 +92,7 @@ The following MIME types are usually implemented by Notebook client. We track al
   - [x] Interactive JavaScript wigets. Contributed by extensions, like ipywidget or vega/vega-lite
   - [ ] **Custom Mime Types** (`application/vnd*`). Similar to above, might require API extensibility for contributing custom vendor mime types handler
   
-  What about completely custom cells like Facebook has for SQL data?
+ :suspect: What about completely custom cells like Facebook has for SQL data?
 
 Notebook outputs might have mutiple mimetypes and notebook clients will choose the richest mime type they can render. The display order for mime types can be as below
 

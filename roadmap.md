@@ -30,7 +30,7 @@ Currently there are still two three missing pieces:
   - [ ] `application/json`.
   - [ ] `image/*`. We render PNG and JEPG in core but svg and gifs should be rendered in webview/iframe. (GIF support is a must as we don't support videos).
   - [ ] `application/scripts`.
-  - What about other Mime types? What about adding new mime types ourselves? (Custom API referenced below might handle this)
+  - :suspect: What about other Mime types? What about adding new mime types ourselves? (Custom API referenced below might handle this)
 - Metadata
   - [ ] Cell metadata which controls the renderings of cells, like `editable`, `execution_count`
   - [ ] Output metadata, like whether the output should be rendered in an isolated context.
@@ -47,9 +47,9 @@ Fulls lists of cell types, output mime types and metadata we may want to support
   - [ ] 1️⃣ 🏃 Editor height grow with content.
     - Note: make sure word wrapping and folding (one example for content widgets) work properly.
   - [ ] View output in seperate view. For example view output in fullscreen
-  - Will editor extensions work? 
-  - How is language server going to be hooked up?
-  - Can we provide more than one language server for a cell? (Jupyter auto complete)
+  - :suspect: Will editor extensions work? 
+  - :suspect: How is language server going to be hooked up?
+  - :suspect: Can we provide more than one language server for a cell? (Jupyter auto complete)
 - Markdown Cell
   - [x] Live Preview
     - [x] Editor/Preview splited vertically
@@ -74,7 +74,7 @@ The following MIME types are usually implemented by Notebook client. We track al
 - Stream
   - [x] Text
   - [x] Error/ANSI
-  - We reformat this output ourselves. At the render spot as we don't want our reformat to be saved into the notebook. 
+  - :suspect: We reformat this output ourselves. At the render spot as we don't want our reformat to be saved into the notebook. 
 - Display Data
   - [x] text/plain
   - [x] text/markdown
@@ -82,7 +82,7 @@ The following MIME types are usually implemented by Notebook client. We track al
   - [ ] 1️⃣ text/latex
   - [x] image/png
   - [x] image/jpeg
-  - Same with jpeg/png/svg. We add extra controls onto the output at render time.
+  - :suspect: Same with jpeg/png/svg. We add extra controls onto the output at render time.
   - [ ] 1️⃣ image/gif
   - [ ] 1️⃣ image/bmp
   - [ ] 1️⃣ image/svg+xml
@@ -184,7 +184,7 @@ Refs: [jupyterlab api for cell management](https://jupyterlab.readthedocs.io/en/
   - [x] Execute code cell
   - [ ] Cell selection
   - [ ] 1️⃣ Clear output
-  - Split cell? Merge Cell? Extensibility points around this?
+  - :suspect: Split cell? Merge Cell? Extensibility points around this?
 
 ## Commands/Keybindings
 
@@ -344,9 +344,9 @@ In Jupyter Notebook, you can run code cell line by line and the kernel behaves l
 We need to validate if this can work and investigate how debugging should work when the kernel is not connected.
 
 # Other Extensibility points
- - Variable explorer? Can probably do this in a side window
- - Kernel selection?
- - Controlling the kernel like:
+ - :suspect: Variable explorer? Can probably do this in a side window
+ - :suspect: Kernel selection?
+ - :suspect: Controlling the kernel like:
     - Run all cells? Interrupt kernel? Restart Kernel?
 
 # MISC

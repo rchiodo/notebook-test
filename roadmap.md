@@ -18,6 +18,8 @@ Annotations
 | ✔️ | supported |
 | 1️⃣ | p1 |
 | 2️⃣ | p2 |
+| :suspect: | comments from rchiodo |
+| :musical_note: | comments from jimgries |
 
 # Rendering
 

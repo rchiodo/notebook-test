@@ -6,6 +6,7 @@ A list of features for a Notebook **client**.
 - Editor features
 - Cell manipulation 
   - Commands/Keybindings
+- Accessibility
 - Language features
 - Debug
 - MISC
@@ -21,24 +22,24 @@ Annotations
 | :suspect: | comments from rchiodo |
 | :musical_note: | comments from jimgries |
 
+| 🐍 | supported in Python extension | 
 # Rendering
 
 A notebook consists of an ordered list of cells. Each cell can be markdown content or source code with executed outputs. Currently we use `marked.js` to render markdown content and a full size monaco editor for source code.
 
 Currently there are still two three missing pieces:
 
-- MIME Types
+- 🐍 MIME Types. Python ships with `nteract`
   - [ ] LaTeX. Users may use them in both Markdown Cell or Outputs.
-  - [ ] `application/json`.
+  - [x] `application/json`.
   - [ ] `image/*`. We render PNG and JEPG in core but svg and gifs should be rendered in webview/iframe. (GIF support is a must as we don't support videos).
-  - [ ] `application/scripts`.
-  - :suspect: What about other Mime types? What about adding new mime types ourselves? (Custom API referenced below might handle this)
+  - [x] `application/scripts`.
 - Metadata
   - [ ] Cell metadata which controls the renderings of cells, like `editable`, `execution_count`
   - [ ] Output metadata, like whether the output should be rendered in an isolated context.
   - [ ] Metadata **editing**
 - Comm between output and extension
-  - [ ] 2️⃣  API for extensions to talk to the output rendered in webview
+  - [ ] 2️⃣  API for notebook extensions to talk to the output rendered in webview
 
 Fulls lists of cell types, output mime types and metadata we may want to support are listed below.
 
@@ -46,27 +47,29 @@ Fulls lists of cell types, output mime types and metadata we may want to support
 
 - Code Cell
   - [x] Render source code in regular editor
-  - [ ] 1️⃣ 🏃 Editor height grow with content.
+  - [ ] 🐍 1️⃣ 🏃 Editor height grow with content.
     - Note: make sure word wrapping and folding (one example for content widgets) work properly.
-  - [ ] View output in seperate view. For example view output in fullscreen
+  - [ ] View output in seperate view. For example view output in fullscreen (contributed by notebook extensions)
   - :suspect: Will editor extensions work? 
   - :suspect: How is language server going to be hooked up?
   - :suspect: Can we provide more than one language server for a cell? (Jupyter auto complete)
-  
+
 - Markdown Cell
   - [x] Live Preview
     - [x] Editor/Preview splited vertically
-    - [ ] Side by side. Ref [Google Colab](https://colab.research.google.com/drive/16RMW8h7h2zcfuamLkhWucf2ooo82yky1#scrollTo=0h0u01uSB4nT)
+    - [ ] Side by side. Ref [Google Colab](https://colab.research.google.com/drive/16RMW8h7h2zcfuamLkhWucf2ooo82yky1#scrollTo=0h0u01uSB4nT). (The preview can be in an another editor group, similar to markdown preview to the side)
   - [ ] Markdown engine
     - [x] Commonmark
     - [x] GFM
-    - [ ] 1️⃣ LaTeX
-    - [ ] HTML
+    - [ ] 🐍 1️⃣ LaTeX
+    - [ ] HTML (we have HTML support with marked.js but not full HTML)
     - [ ] Video. Note that VS Code doesn't ship with ffmpeg
     - [ ] Attachments. References to local resources.
 
 ## Output 
 
+
+🐍 Python supports all Mimetypes which are supported by `nteract`.
 Refs:
 
 * [jupyterlab](https://jupyterlab.readthedocs.io/en/stable/user/file_formats.html)
@@ -88,9 +91,9 @@ The following MIME types are usually implemented by Notebook client. We track al
   - :suspect: Same with jpeg/png/svg. We add extra controls onto the output at render time.
   - [ ] 1️⃣ image/gif
   - [ ] 1️⃣ image/bmp
-  - [ ] 1️⃣ image/svg+xml
-  - [ ] 1️⃣ application/javascript
-  - [ ] 1️⃣ application/json
+  - [x] 1️⃣ image/svg+xml
+  - [x] 1️⃣ application/javascript
+  - [x] 1️⃣ application/json
   - [ ] application/pdf
   - [x] Interactive JavaScript wigets. Contributed by extensions, like ipywidget or vega/vega-lite
   - [ ] **Custom Mime Types** (`application/vnd*`). Similar to above, might require API extensibility for contributing custom vendor mime types handler
@@ -122,9 +125,9 @@ Cell metadata is used to control the rendering of a cell, for example we can dis
 
 Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.html#cell-metadata)
 
-- [ ] 1️⃣ editable
+- [ ] 1️⃣ editable/readonly
 - [ ] 1️⃣ deletable
-- [ ] collapsed
+- [ ] 1️⃣ collapsed
 - [ ] scrolled
 - [ ] name
 - [ ] tags
@@ -142,7 +145,7 @@ Refs: [nbformat](https://nbformat.readthedocs.io/en/latest/format_description.ht
 
 - [ ] 1️⃣ isolated. isolated output should be isolated into an iframe
 - [ ] 1️⃣ dimensions. `"metadata" : { "image/png": { "width": 640, "height": 480, } }`
-- needs_background
+- [ ] needs_background. `light/dark`
 
 # Editor Features
 
@@ -150,15 +153,17 @@ Notebooks contain text (markdown) and source code, so users would expect [code e
 
 - Workspace
   - [x] 1️⃣ Save
-  - [ ] 1️⃣ SaveAs
-  - [ ] 1️⃣ Auto Save
-  - [ ] Hot Exit
+  - [ ] 🐍 1️⃣ SaveAs
+  - [ ] 🐍 1️⃣ Auto Save
+  - [ ] 🐍 Hot Exit
   - [ ] View States
     - [ ] 1️⃣ Cursor/Selection. Cursor states should be tracked when users scroll the notebook (our virtualization optimization leads to state loss now).
     - [ ] 1️⃣ Move editor across editor groups and persist states
 - Basic Editing ([ref](https://code.visualstudio.com/docs/editor/codebasics))
-  - [ ] 1️⃣ Find & Replace in File. Users might want to F&R in editable markdown cells too.
+  - [ ] 🐍 1️⃣ Find in File. Users might want to F&R in editable markdown cells too.
+  - [ ] 1️⃣ Replace in File.
   - [ ] Find & Replace in Cell 
+  - [ ] Folding
   - [ ] Multi cursor across cells
   - [ ] Undo/Redo across cells. Cell operations should be saved to Undo stack as well.
   - [ ] 1️⃣ Cursor movement across cells.
@@ -175,16 +180,16 @@ Currently we put all cell related actions in the context menu but it's not easil
 Refs: [jupyterlab api for cell management](https://jupyterlab.readthedocs.io/en/stable/developer/notebook.html)
 
 - UX polish
-  - [ ] Run code cell, Edit
-  - [ ] Toolbar for other actions
+  - [ ] 🐍 Run code cell, Edit
+  - [ ] 🐍 Toolbar for other actions
 - Commands
   - [x] Create new markdown cell
   - [x] Create new code cell
-  - [ ] 1️⃣ Move Cell
+  - [ ] 🐍 1️⃣ Move Cell
   - [x] Delete Cell
   - [ ] Drag and Drop. Supported in JupyterLab
   - [ ] Expand/Collapse outputs
-  - [ ] 1️⃣ Undo/Redo cell manipulation
+  - [ ] 🐍 1️⃣ Undo/Redo cell manipulation
   - [x] Execute code cell
   - [ ] Cell selection
   - [ ] 1️⃣ Clear output
@@ -200,95 +205,104 @@ Keybindings in Edit mode are pretty close to VS Code's builtin keybindings howev
 
 Command Mode (press Esc to enable)
 
-| Shortcut | Command | Status |
-| --- | --- | --- |
-| F | find and replace | |
-| ↩ | enter edit mode | |
-| ⌘⇧F | open the command palette | |
-| ⌘⇧P | open the command palette | ✔️ |
-| P | open the command palette | |
-| ⇧↩ | run cell, select below | 1️⃣ |
-| ⌃↩ | run selected cells | 1️⃣ |
-| ⌥↩ | run cell and insert below | 1️⃣ |
-| Y | change cell to code | 1️⃣ |
-| M | change cell to markdown | 1️⃣ |
-| R | change cell to raw | |
-| 1 | change cell to heading 1 | |
-| 2 | change cell to heading 2 | |
-| 3 | change cell to heading 3 | |
-| 4 | change cell to heading 4 | |
-| 5 | change cell to heading 5 | |
-| 6 | change cell to heading 6 | |
-| K | select cell above | |
-| ↑ | select cell above | 1️⃣ |
-| ↓ | select cell below | 1️⃣ |
-| J | select cell below | |
-| ⇧K | extend selected cells above | |
-| ⇧↑ | extend selected cells above | |
-| ⇧↓ | extend selected cells below | |
-| ⇧J | extend selected cells below | |
-| A | insert cell above | 1️⃣ |
-| B | insert cell below | 1️⃣ |
-| X | cut selected cells | 1️⃣ |
-| C | copy selected cells | 1️⃣ |
-| ⇧V | paste cells above | 1️⃣ |
-| V | paste cells below | 1️⃣ |
-| Z | undo cell deletion | 1️⃣ |
-| D,D | delete selected cells | |
-| ⇧M | merge selected cells, or current cell with cell below if only one cell is selected | |
-| ⌘S | Save and Checkpoint | |
-| S | Save and Checkpoint | 1️⃣ |
-| L | toggle line numbers | |
-| O | toggle output of selected cells | |
-| ⇧O | toggle output scrolling of selected cells | |
-| H | show keyboard shortcuts | |
-| I,I | interrupt the kernel | |
-| 0,0 | restart the kernel (with dialog) | |
-| Esc | close the pager | |
-| Q | close the pager | |
-| ⇧L | toggles line numbers in all cells, and persist the setting | |
-| ⇧␣ | scroll notebook up | |
-| ␣ | scroll notebook down | |
+| Shortcut | Command | Status | Python | 
+| --- | --- | --- | --- | 
+| F | find and replace | | |
+| ↩ | enter edit mode | | |
+| ⌘⇧F | open the command palette | | |
+| ⌘⇧P | open the command palette | ✔️ | |
+| P | open the command palette | | |
+| ⇧↩ | run cell, select below | 1️⃣  | |
+| ⌃↩ | run selected cells | 1️⃣ | |
+| ⌥↩ | run cell and insert below | 1️⃣ | |
+| Y | change cell to code | 1️⃣ | |
+| M | change cell to markdown | 1️⃣ | |
+| R | change cell to raw | | |
+| 1 | change cell to heading 1 | | |
+| 2 | change cell to heading 2 | | |
+| 3 | change cell to heading 3 | | |
+| 4 | change cell to heading 4 | | |
+| 5 | change cell to heading 5 | | |
+| 6 | change cell to heading 6 | | |
+| K | select cell above | | |
+| ↑ | select cell above | 1️⃣ | |
+| ↓ | select cell below | 1️⃣ | |
+| J | select cell below | | |
+| ⇧K | extend selected cells above | | |
+| ⇧↑ | extend selected cells above | | |
+| ⇧↓ | extend selected cells below | | |
+| ⇧J | extend selected cells below | | |
+| A | insert cell above | 1️⃣ | |
+| B | insert cell below | 1️⃣ | |
+| X | cut selected cells | 1️⃣ | |
+| C | copy selected cells | 1️⃣ | |
+| ⇧V | paste cells above | 1️⃣ | |
+| V | paste cells below | 1️⃣ | |
+| Z | undo cell deletion | 1️⃣ | |
+| D,D | delete selected cells | | |
+| ⇧M | merge selected cells, or current cell with cell below if only one cell is selected | | |
+| ⌘S | Save and Checkpoint | | |
+| S | Save and Checkpoint | 1️⃣ | |
+| L | toggle line numbers | | |
+| O | toggle output of selected cells | | |
+| ⇧O | toggle output scrolling of selected cells | | |
+| H | show keyboard shortcuts | | |
+| I,I | interrupt the kernel | | |
+| 0,0 | restart the kernel (with dialog) | | |
+| Esc | close the pager | | |
+| Q | close the pager | | |
+| ⇧L | toggles line numbers in all cells, and persist the setting | | |
+| ⇧␣ | scroll notebook up | | |
+| ␣ | scroll notebook down | | |
 
 ### Edit Mode
 
 Edit Mode (press Enter to enable)
 
-| Shortcut | Command | Status |
-| --- | --- | --- |
-| ⇥ | code completion or indent | ✔️  |
-| ⇧⇥ | tooltip | |
-| ⌘] | indent | ✔️  |
-| ⌘[ | dedent | ✔️ |
-| ⌘A | select all | ✔️ |
-| ⌘Z | undo | ✔️ |
-| ⌘/ | comment | ✔️ |
-| ⌘D | delete whole line | |
-| ⌘U | undo selection | ✔️ |
-| Insert | toggle overwrite flag | ✔️ |
-| ⌘↑ | go to cell start | ✔️ |
-| ⌘↓ | go to cell end | ✔️ |
-| ⌥← | go one word left | ✔️ |
-| ⌥→ | go one word right | ✔️ |
-| ⌥⌫ | delete word before | ✔️ |
-| ⌥⌦ | delete word after | ✔️ |
-| ⌘⇧Z | redo | ✔️ |
-| ⌘⇧U | redo selection | |
-| ⌃K | emacs-style line kill | ✔️ |
-| ⌘⌫ | delete line left of cursor | ✔️ |
-| ⌘⌦ | delete line right of cursor | ✔️ |
-| ⌃M | enter command mode | |
-| Esc | enter command mode | |
-| ⌘⇧F | open the command palette | |
-| ⌘⇧P | open the command palette | ✔️ |
-| ⇧↩ | run cell, select below | |
-| ⌃↩ | run selected cells | |
-| ⌥↩ | run cell and insert below | |
-| ⌃⇧Minus | split cell at cursor | |
-| ⌘S | Save and Checkpoint | |
-| ↓ | move cursor down | |
-| ↑ | move cursor up | |
+| Shortcut | Command | Status | Python |
+| --- | --- | --- | --- |
+| ⇥ | code completion or indent | ✔️  | |
+| ⇧⇥ | tooltip | | |
+| ⌘] | indent | ✔️  | |
+| ⌘[ | dedent | ✔️ | |
+| ⌘A | select all | ✔️ | |
+| ⌘Z | undo | ✔️ | |
+| ⌘/ | comment | ✔️ | |
+| ⌘D | delete whole line | | |
+| ⌘U | undo selection | ✔️ | |
+| Insert | toggle overwrite flag | ✔️ | |
+| ⌘↑ | go to cell start | ✔️ | |
+| ⌘↓ | go to cell end | ✔️ | |
+| ⌥← | go one word left | ✔️ | |
+| ⌥→ | go one word right | ✔️ | |
+| ⌥⌫ | delete word before | ✔️ | |
+| ⌥⌦ | delete word after | ✔️ | |
+| ⌘⇧Z | redo | ✔️ | |
+| ⌘⇧U | redo selection | | |
+| ⌃K | emacs-style line kill | ✔️ | |
+| ⌘⌫ | delete line left of cursor | ✔️ | |
+| ⌘⌦ | delete line right of cursor | ✔️ | |
+| ⌃M | enter command mode | | |
+| Esc | enter command mode | | |
+| ⌘⇧F | open the command palette | | |
+| ⌘⇧P | open the command palette | ✔️ | |
+| ⇧↩ | run cell, select below | | |
+| ⌃↩ | run selected cells | | |
+| ⌥↩ | run cell and insert below | | |
+| ⌃⇧Minus | split cell at cursor | | |
+| ⌘S | Save and Checkpoint | | |
+| ↓ | move cursor down | | |
+| ↑ | move cursor up | | |
 
+# Accessibility
+
+Classic Jupyter Notebook is lack of good accessibility support for code editing and navigations. While building the native notebook editor in core, we should make sure it's equally accessible as the text editor.
+
+Users from community already provides concrete examples of accessibility issues in classic Jupyter Notebook.
+
+Refs: 
+  * https://github.com/jupyter/notebook/issues/1801
+  * https://github.com/jupyterlab/jupyterlab/issues/4878
 # Language Features
 
 Source code in code cells in a notebook are loosely coupled. You can import a module in one code cell and then use it directly in another code cell, however it doesn't mean that the `import` cell has to be layed before the other cell. As long as the `import` cell is executed first, the other cell is valid.
@@ -303,6 +317,8 @@ To support **Completions**, **Parameter hints**, **Hover** and **Diagnostics**, 
 
 - [ ] API: Expose code cells contents and event listeners for content change
 - [ ] Extension register themselves as language features providers
+
+🐍 Completions, Parameter Hints, Hover. Code cells are concatenated from top to bottom. 
 
 ## Navigation
 
@@ -370,3 +386,18 @@ Bugs / Polish items
 - [x] Notebook file not loaded from extension when opened the second time
 - [ ] Activation events for notebook provider. Activate extension when a notebook file is opened.
 - [ ] Editing in nested code editor, cursor should always be visible.
+- [ ] Vim Escape Key 
+  * Currently workaround the issue by adding keybinding
+  ```json
+  {
+        "key": "escape",
+        "command": "extension.vim_escape",
+        "when": "editorTextFocus && vim.active && !inDebugRepl && vim.mode != 'Normal'"
+    },
+    {
+        "key": "escape",
+        "command": "-extension.vim_escape",
+        "when": "editorTextFocus && vim.active && !inDebugRepl"
+    }
+  ```
+- [ ] Python extension activation slows down notebook file opening.
